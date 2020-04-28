@@ -1,0 +1,2 @@
+rootProject.name='PADTM_Lab04'
+include ':app'
