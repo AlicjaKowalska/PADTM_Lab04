@@ -52,18 +52,25 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapter, View view,int pos, long id)
                 {
-                    TextView name = (TextView)
-                            view.findViewById(android.R.id.text1);
-                    Animal zwierz = db.pobierz(Integer.parseInt
-                            (name.getText().toString()));
-                    Intent intencja = new
-                            Intent(getApplicationContext(),
-                            DodajWpis.class);
+                    TextView name = (TextView) view.findViewById(android.R.id.text1);
+                    Animal zwierz = db.pobierz(Integer.parseInt(name.getText().toString()));
+                    Intent intencja = new Intent(getApplicationContext(), DodajWpis.class);
                     intencja.putExtra("element", zwierz);
                     startActivityForResult(intencja, 2);
                 }
             });
 
+        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+              @Override
+              public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+              {
+                  TextView name = view.findViewById(android.R.id.text1);
+                  db.usun(name.getText().toString());
+                  adapter.changeCursor(db.lista());
+                  adapter.notifyDataSetChanged();
+                  return true;
+              }
+        });
     }
 
     @Override
